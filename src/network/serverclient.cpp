@@ -105,22 +105,16 @@ void ServerClient::writeServerMessage(const QByteArray &f_message)
 
 void ServerClient::disconnectSocket()
 {
-    if (ssocket) {
-        if (ssocket->state() != QAbstractSocket::UnconnectedState) {
-            ssocket->disconnect();
-        }
+    if (ssocket) && (ssocket->state() != QAbstractSocket::UnconnectedState) {
+        ssocket->disconnect();
     }
 }
 
 void ServerClient::fetchServerMetadata(const CoordinatorTypes::ServerInfo &f_server)
 {
     timeout->start();
-    if (f_server.wss_port != -1) {
-        connectToServer(f_server, DATAROUTE, SocketTypes::SECURE);
-    }
-    else {
-        connectToServer(f_server, DATAROUTE, SocketTypes::INSECURE);
-    }
+    SocketTypes type = f_server.wss_port != -1 ? SocketTypes::SECURE : SocketTypes::INSECURE;
+    connectToServer(f_server, DATAROUTE, type);
 }
 
 void ServerClient::joinServer(const CoordinatorTypes::ServerInfo &f_server)
