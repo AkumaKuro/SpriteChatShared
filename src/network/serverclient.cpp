@@ -105,7 +105,7 @@ void ServerClient::writeServerMessage(const QByteArray &f_message)
 
 void ServerClient::disconnectSocket()
 {
-    if (ssocket) && (ssocket->state() != QAbstractSocket::UnconnectedState) {
+    if (ssocket && ssocket->state() != QAbstractSocket::UnconnectedState) {
         ssocket->disconnect();
     }
 }
